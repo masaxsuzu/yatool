@@ -8,9 +8,9 @@ import { JSDOM } from 'jsdom';
 export function analyzeDeck(body) {
     const dom = new JSDOM(body);
     const category = analyzeNeoStandardCategory(dom);
-    const cxCards = analyzeCXCards(dom);
+    const cxCardSummary = analyzeCxCardSummary(dom);
 
-    return { category: category, cxCards: cxCards };
+    return { category: category, cxCardSummary: cxCardSummary };
 }
 
 /**
@@ -35,7 +35,7 @@ function analyzeNeoStandardCategory(dom) {
  * @param {JSDOM} dom 
  * @returns
  */
-function analyzeCXCards(dom) {
+function analyzeCxCardSummary(dom) {
     let cxCards = [];
     const document = dom.window.document;
     const deck = document.querySelector(

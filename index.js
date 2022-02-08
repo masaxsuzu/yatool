@@ -26,13 +26,13 @@ async function main() {
 async function inspect(deckCode, page) {
     const deck = await inspectDeck(deckCode, page);
     let cards = [];
-    for (const cxCard of deck.cxCards) {
-        let triggerType = await inspectCxCard(cxCard.id, page);
+    for (const cxCardSummary of deck.cxCardSummary) {
+        let triggerType = await inspectCxCard(cxCardSummary.id, page);
         cards.push({
-            numOfCards: cxCard.numOfCards,
+            numOfCards: cxCardSummary.numOfCards,
             summary: {
-                id: cxCard.id,
-                name: cxCard.name,
+                id: cxCardSummary.id,
+                name: cxCardSummary.name,
                 triggerType: triggerType
             }
         });
