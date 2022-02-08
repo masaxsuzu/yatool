@@ -14,15 +14,22 @@ export function analyzeCxCard(body) {
 /**
  * 
  * @param {JSDOM} dom 
- * @returns 
+ * @returns triggerType
  */
  function analyzeTriggerType(dom) {
     const document = dom.window.document;
-    const img = document.querySelector(
-        '#cardDetail > table > tbody > tr:nth-child(9) > td:nth-child(4) > img'
+    const trigger = document.querySelector(
+        '#cardDetail > table > tbody > tr:nth-child(9) > td:nth-child(4)'
     );
 
-    return splitTriggerTypeImageSource(img.src);
+    const triggerImages = trigger.querySelectorAll("img");
+    let triggerSource = [];
+    triggerImages.forEach(img => {
+        const type = splitTriggerTypeImageSource(img.src);
+        triggerSource.push(type);
+    });
+
+    return toTriggerType(triggerSource);
 }
 /**
  * 
@@ -32,4 +39,21 @@ function splitTriggerTypeImageSource(src){
     let path = src.split('/');
     let gif = path[path.length - 1];
     return gif.substring(0, gif.length - 4);
+}
+
+/**
+ * 
+ * @param {string[]} triggerIcons 
+ */
+ function toTriggerType(triggerIcons){
+    if(triggerIcons.length === 0) {
+        return 'none';
+    }
+    if(triggerIcons.length === 1) {
+        return triggerIcons[0];
+    }
+    if(triggerIcons.length === 2) {
+        return triggerIcons.join("+");
+    }
+    return 'none'
 }

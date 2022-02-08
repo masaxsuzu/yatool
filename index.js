@@ -8,10 +8,15 @@ async function main() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    const deckCodes = ['6YPH'];
-    for (const deckCode of deckCodes) {
-        const deck = await inspect(deckCode, page);
-        debug(deck);
+    const deckCodes = ['HR9W', 'EAK7', 'EV7E'];
+
+    try {
+        for (const deckCode of deckCodes) {
+            const deck = await inspect(deckCode, page);
+            debug(deck);
+        }
+    } catch (error) {
+        console.error(error);
     }
 
     await browser.close();
